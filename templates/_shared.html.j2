@@ -1,0 +1,13 @@
+{# Shared by the resume and cover letter so both carry the same header and fonts. #}
+{% macro base_css() %}
+  @page { size: Letter; margin: 0.6in 0.7in; }
+  body { font-family: Arial, Helvetica, sans-serif; font-size: 10.5pt; line-height: 1.35; color: #111; margin: 0; }
+  h1 { font-size: 20pt; margin: 0; text-align: center; }
+  .contact { text-align: center; margin: 4px 0 2px; }
+  p { margin: 0; }
+{% endmacro %}
+
+{% macro header(contact) %}
+  <h1>{{ contact.name }}</h1>
+  <p class="contact">{{ contact.location }} | {{ contact.phone }} | {{ contact.email }}{% for link in contact.links %} | {{ link }}{% endfor %}</p>
+{% endmacro %}

@@ -1,0 +1,72 @@
+{% import "_shared.html.j2" as shared %}
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>{{ contact.name }} - Resume</title>
+<style>
+  /* Single column, standard headings, real text only: easy for applicant tracking systems to read. */
+  {{ shared.base_css() }}
+  .headline { text-align: center; font-weight: bold; margin: 0 0 6px; }
+  h2 { font-size: 11.5pt; text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 1.5px solid #111;
+       margin: 12px 0 6px; padding-bottom: 2px; break-after: avoid-page; }
+  h3 { font-size: 10.5pt; margin: 0; }
+  .entry { margin-top: 8px; }
+  .row { display: flex; justify-content: space-between; align-items: baseline; }
+  .sub { margin: 0; }
+  ul { margin: 3px 0 0; padding-left: 18px; }
+  li { margin-bottom: 2px; }
+  section, .entry { break-inside: avoid-page; }
+</style>
+</head>
+<body>
+  {{ shared.header(contact) }}
+  {% if summary %}<p class="headline">{{ summary.headline }}</p>{% endif %}
+
+  {% if summary %}
+  <h2>Summary</h2>
+  <p>{{ summary.text }}</p>
+  {% endif %}
+
+  {% if jobs %}
+  <h2>Experience</h2>
+  {% for job in jobs %}
+  <div class="entry">
+    <div class="row"><h3>{{ job.title }}</h3><span>{{ job.start }} - {{ job.end }}</span></div>
+    <p class="sub">{{ job.company }}</p>
+    <ul>{% for b in job.bullets %}<li>{{ b.text }}</li>{% endfor %}</ul>
+  </div>
+  {% endfor %}
+  {% endif %}
+
+  {% if projects %}
+  <h2>Projects</h2>
+  {% for p in projects %}
+  <div class="entry">
+    <div class="row"><h3>{{ p.name }}</h3><span>{{ p.date or "" }}</span></div>
+    {% if p.link %}<p class="sub">{{ p.link }}</p>{% endif %}
+    <ul>{% for b in p.bullets %}<li>{{ b.text }}</li>{% endfor %}</ul>
+  </div>
+  {% endfor %}
+  {% endif %}
+
+  {% if education %}
+  <h2>Education</h2>
+  {% for e in education %}
+  <div class="row"><span><strong>{{ e.credential }}</strong>, {{ e.school }}</span><span>{{ e.years }}</span></div>
+  {% endfor %}
+  {% endif %}
+
+  {% if certifications %}
+  <h2>Certifications</h2>
+  <ul>{% for c in certifications %}<li>{{ c }}</li>{% endfor %}</ul>
+  {% endif %}
+
+  {% if skills %}
+  <h2>Skills</h2>
+  {% for group, items in skills.items() %}
+  <p><strong>{{ group }}:</strong> {{ items | join(", ") }}</p>
+  {% endfor %}
+  {% endif %}
+</body>
+</html>

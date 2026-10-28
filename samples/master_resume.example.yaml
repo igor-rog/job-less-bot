@@ -1,0 +1,50 @@
+# Example master resume (fake person). Copy to data/master_resume.yaml and replace with your own.
+# data/ is gitignored, so your real resume never gets committed.
+
+contact:
+  name: Alex Example
+  email: alex@example.com
+  phone: 555-555-0100
+  location: Toronto, ON
+  links:
+    - github.com/alex-example
+
+summaries:            # one is picked per resume
+  - id: sum_main
+    headline: Electronics Technician
+    text: Electronics technician with experience testing and repairing sensor hardware.
+
+skills:               # group name -> list of skills
+  Test Equipment:
+    - Oscilloscopes
+    - Multimeters
+  Software:
+    - Python
+
+jobs:
+  - id: acme
+    title: Test Technician
+    company: Acme Sensors
+    start: June 2022
+    end: Present
+    bullets:          # every bullet needs an ID that is unique across the whole file
+      - id: acme_test
+        text: Tested 40 sensor boards a day against written specifications.
+      - id: acme_repair
+        text: Found and repaired solder faults using an oscilloscope and multimeter.
+
+projects:
+  - id: weather
+    name: Home Weather Station
+    date: "2024"
+    link: github.com/alex-example/weather
+    bullets:
+      - id: ws_build
+        text: Built a microcontroller weather station that logs temperature and humidity.
+
+education:
+  - credential: Electronics Engineering Technician
+    school: Example College
+    years: 2019 - 2021
+
+certifications: []

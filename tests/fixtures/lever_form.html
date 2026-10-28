@@ -1,0 +1,23 @@
+<!doctype html>
+<html><body>
+<!-- Local stand-in for a Lever apply page: same field names, card questions, an EEO survey. -->
+<form onsubmit="event.preventDefault(); document.body.innerHTML = '<h2>Application submitted</h2>';">
+  <input type="file" name="resume">
+  <input type="text" name="name" required><input type="email" name="email" required>
+  <input type="text" name="phone" required><input type="text" name="location" required>
+  <input type="text" name="org" required>
+  <input type="text" name="urls[LinkedIn]"><input type="text" name="urls[GitHub]">
+  <textarea name="comments"></textarea>
+  <ul>
+    <li class="application-question"><div class="application-label">Are you legally authorized to work in Canada? ✱</div>
+      <input type="radio" name="cards[abc][field0]" value="Yes" required><input type="radio" name="cards[abc][field0]" value="No" required></li>
+    <li class="application-question"><div class="application-label">What are your salary expectations?</div>
+      <input type="text" name="cards[abc][field1]"></li>
+    <li class="application-question"><div class="application-label">How did you hear about us?</div>
+      <select name="cards[abc][field2]"><option value=""></option><option>Job board</option><option>Referral</option></select></li>
+  </ul>
+  <div><span>What best describes your gender?</span>
+    <input type="radio" name="surveysResponses[s1][responses][field0]" value="Man"></div>
+  <button type="submit" id="btn-submit">Submit application</button>
+</form>
+</body></html>

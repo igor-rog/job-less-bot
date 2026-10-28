@@ -1,0 +1,144 @@
+# Pipeline settings. Safe to commit: no secrets or personal data here.
+
+search:
+  location: "Toronto, ON"
+  country: "ca"
+  # A job counts as local if its location mentions any of these. "Remote" counts only within Canada.
+  areas: [Toronto, North York, Scarborough, Etobicoke, Mississauga, Brampton, Vaughan, Markham,
+          Richmond Hill, Oakville, Burlington, Pickering, Ajax, Whitby, Oshawa, Milton, Concord,
+          Woodbridge, Newmarket, Aurora, GTA]
+  # Watchlist companies list hundreds of jobs; only titles containing one of these words are kept.
+  watchlist_title_words: [electrical, electrician, electronics, technician, technologist, apprentice,
+                          RF, wireless, instrumentation, controls, lineworker, powerline, test, calibration,
+                          UX, UI, user experience, product designer, AI, machine learning,
+                          security, defence, defense, access control, alarm, CCTV, cyber,
+                          production, manufacturing, sterilization, reprocessing, quality,
+                          designer, prototyping, IoT, support engineer]
+  # Jobs whose title contains any of these are dropped before any AI call.
+  exclude_title_terms:
+    - help desk
+    - it support
+    - service desk
+    - network administrator
+    - senior
+    - sr.
+    - principal
+    - director
+    # languages the job requires that you don't speak (example)
+    - mandarin
+    - bilingual
+
+# JSearch: up to 400 requests/month; each query returns about 10 jobs.
+# Main target every 2 days (14 x 15 = ~210/month), everything else weekly (5 x ~4.3 = ~22/month).
+jsearch:
+  date_posted: week        # all | today | 3days | week | month (overlap is deduped)
+  repeat_every_days: 2
+  # Plain queries only: JSearch returns nothing for queries with OR.
+  queries:
+    - engineering technician in Toronto
+    - electrical technician in Toronto
+    - electronics technician in Toronto
+    - test technician in Toronto
+    - calibration technician in Toronto
+    - electromechanical technician in Toronto
+    - quality technician in Toronto
+    - instrumentation technician in Toronto
+    - electrical apprentice in Toronto
+    - control systems technician in Toronto
+    - hardware test technician in Toronto
+    - QA technician in Toronto
+    - production technician in Toronto
+    - manufacturing technician in Toronto
+  weekly_queries:                # lower-priority directions, searched once a week
+    - field service technician in Toronto
+    - RF technician in Toronto
+    - prototyping technician in Toronto
+    - UX UI designer in Toronto
+    - product designer in Toronto
+
+scoring:
+  min_fit_score: 55          # 0-100; only jobs at or above this get a tailored resume.
+                             # 55 = realistic long shots included; 70 = only clear fits.
+  # Soft preferences the scorer weighs (not hard filters)
+  # Tier ranking: main target as scored; design a few points lower, so it sits just below an equally
+  # good technician job; other roles capped.
+  # Which tier a job is in, from its title (main is checked first).
+  tier_words:
+    main: [technician, technologist, electrician, electrical, electronics, electromechanical, apprentice,
+           calibration, instrumentation, controls, test engineer, field service]
+    design: [designer, UX, UI, user experience, user research, graphic, web design]
+  tier_penalty:
+    design: 8
+  tier_caps:
+    other: 60
+  # Example candidate (the sample person in samples/master_resume.example.yaml); describe yourself here.
+  preferences: >
+    MAIN TARGET: entry-level electronics, electrical, test, calibration, quality and field service
+    technician roles, and electrical apprenticeships. These build on an Electronics Engineering
+    Technician diploma, a co-op in hardware test and personal embedded projects.
+    DESIGN (second priority): junior UX/UI and product design, building on a UX certificate and
+    freelance design work.
+    OTHER (lower priority): technical support engineer, production supervisor and IoT roles.
+    Not wanted: help desk, service desk or pure networking roles.
+
+cover_letter:
+  max_words: 250
+  max_dashes: 1                 # em/en dashes or " - " used as punctuation
+  max_list_sentences: 1         # sentences with an "A, B, and C" list
+  # Plain-code check flags any of these (case-insensitive) in a letter.
+  banned_phrases:
+    - excited to apply
+    - proven track record
+    - fast-paced environment
+    - leverage
+    - passionate
+    - delve
+    - testament to
+    - cutting-edge
+    - synergy
+    - thrive in
+
+answers:
+  match_threshold: 86           # 0-100 fuzzy similarity needed to reuse an approved answer
+  # Questions matching any of these (regex, case-insensitive) are drafted fresh for every job.
+  per_job_patterns:
+    - why do you want
+    - why are you interested
+    - what interests you
+    - what attracts you
+    - why (this|our) (company|role|position|team)
+    - why .*(work|join) (here|us|at)
+    - cover letter
+    - meet .*qualifications       # depends on each posting's requirements
+    - years of relevant
+
+# Apprenticeship outreach: electrical companies from Google Maps (OpenWeb Ninja Local Business Data).
+outreach:
+  min_reviews: 25               # only established companies, not one-person contractors
+  max_words: 150                # email body length
+  draft_batch: 20               # emails written per `draft` run
+  max_per_day: 15               # emails sent per day; more cold email risks Gmail spam flags
+  results_per_query: 100
+  queries:
+    - electrical contractor in Toronto
+    - electrical contractor in Mississauga
+    - electrical contractor in Vaughan
+    - electrical contractor in Markham
+  # Supply stores, and HVAC/plumbing companies that also do electrical work
+  exclude_name_words: [supply, supplies, wholesale, distributor, store, lighting, heating, hvac,
+                       air conditioning, cooling, plumbing, furnace]
+
+models:
+  scoring: claude-haiku-5-5     # cheap and fast, one short JSON answer per job
+  tailoring: claude-sonnet-5-5  # resume tailoring and cover letters
+
+# USD per million tokens (Anthropic list prices). Cache writes cost 1.25x input, cache reads 0.1x,
+# and the Batch API halves everything.
+pricing:
+  claude-haiku-5-5: {input: 0.10, output: 0.50}
+  claude-sonnet-5-5: {input: 2.00, output: 10.00}
+
+limits:
+  daily_application_cap: null   # no cap: every job that passes scoring gets prepared
+  monthly_budget_usd: 20.00     # pipeline stops for the month once Claude spend hits this
+  jsearch_monthly_requests: 400 # your plan must allow this many

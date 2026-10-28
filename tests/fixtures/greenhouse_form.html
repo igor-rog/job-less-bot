@@ -1,0 +1,29 @@
+<!doctype html>
+<html><body>
+<!-- Local stand-in for a Greenhouse job-boards form: same ids, a searchable combobox, a submit button. -->
+<form id="application_form" onsubmit="event.preventDefault(); document.body.innerHTML = '<h1>Thank you for applying!</h1>';">
+  <label for="first_name">First Name*</label><input id="first_name" type="text">
+  <label for="last_name">Last Name*</label><input id="last_name" type="text">
+  <label for="email">Email*</label><input id="email" type="text">
+  <label for="phone">Phone*</label><input id="phone" type="tel">
+  <input id="resume" type="file"><input id="cover_letter" type="file">
+  <label for="question_1">Authorization to work in Canada*</label>
+  <input id="question_1" role="combobox" type="text">
+  <div id="question_1_list" role="listbox" hidden>
+    <div role="option">Yes</div><div role="option">No</div>
+  </div>
+  <label for="question_2">Years of soldering experience</label><input id="question_2" type="text">
+  <label for="question_3">Location (City)</label><input id="question_3" type="text">
+  <label for="question_4">Gender</label><input id="question_4" type="text">
+  <button type="submit">Submit application</button>
+</form>
+<script>
+  // Like Greenhouse: an attached file's name appears under its button.
+  document.querySelectorAll('input[type=file]').forEach(i => i.addEventListener('change', () => {
+    const s = document.createElement('span'); s.textContent = i.files[0].name; i.after(s); }));
+  const box = document.getElementById('question_1'), list = document.getElementById('question_1_list');
+  box.addEventListener('click', () => { list.hidden = false; });
+  list.querySelectorAll('[role=option]').forEach(o => o.addEventListener('click', () => {
+    box.value = o.textContent; list.hidden = true; }));
+</script>
+</body></html>

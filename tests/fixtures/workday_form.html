@@ -1,0 +1,115 @@
+<!doctype html>
+<html><body>
+<!-- Local stand-in for a Workday application wizard: labelled fields, listbox dropdowns, radio groups,
+     an upload box, a voluntary page, and a Review page with a Submit button. -->
+<h2>Laboratory Technician - Test Job</h2>
+<section data-step="1">
+  <h2>My Information</h2>
+  <label for="f1">First Name*</label><input id="f1" aria-required="true">
+  <label for="f2">Last Name*</label><input id="f2" aria-required="true">
+  <label for="f3">Address Line 1*</label><input id="f3" aria-required="true">
+  <label for="f4">City*</label><input id="f4" aria-required="true">
+  <label for="f5">Postal Code*</label><input id="f5" aria-required="true">
+  <label for="f6">Email Address*</label><input id="f6" aria-required="true">
+  <label for="f7">Phone Number*</label><input id="f7" aria-required="true">
+  <span id="l1">Country*</span><button aria-haspopup="listbox" aria-labelledby="l1" aria-required="true" data-options="Canada|United States">Select One</button>
+  <span id="l2">Province*</span><button aria-haspopup="listbox" aria-labelledby="l2" aria-required="true" data-options="Alberta|Ontario|Quebec">Select One</button>
+  <span id="l3">Phone Device Type*</span><button aria-haspopup="listbox" aria-labelledby="l3" aria-required="true" data-options="Home|Mobile">Select One</button>
+  <span id="l4">How Did You Hear About Us?*</span><button aria-haspopup="listbox" aria-labelledby="l4" aria-required="true" data-options="Company Website|Job Board|Referral">Select One</button>
+  <fieldset><legend>Have you previously worked for this company?*</legend>
+    <label><input type="radio" name="prev" value="Yes" required>Yes</label>
+    <label><input type="radio" name="prev" value="No" required>No</label></fieldset>
+  <label><input type="checkbox" id="pref">I have a preferred name</label>
+</section>
+<section data-step="2" hidden>
+  <h2>My Experience</h2>
+  <h3>Work Experience 1</h3>
+  <!-- prefilled wrong, like Workday's resume autofill did -->
+  <label for="w1t">Job Title*</label><input id="w1t" aria-required="true" value="Acme Labs">
+  <label for="w1c">Company*</label><input id="w1c" aria-required="true" value="CSA Group">
+  <label for="w1l">Location</label><input id="w1l">
+  <label><input type="checkbox" id="w1cur">I currently work here</label>
+  <span id="w1from">From*</span>
+  <input id="w1fm" aria-labelledby="w1from" aria-label="Month" aria-required="true" data-automation-id="dateSectionMonth-input">
+  <input id="w1fy" aria-labelledby="w1from" aria-label="Year" aria-required="true" data-automation-id="dateSectionYear-input">
+  <label for="w1d">Role Description</label><textarea id="w1d"></textarea>
+  <h3>Education 1</h3>
+  <label for="e1s">School or University*</label><input id="e1s" value="Example College">
+  <label for="e1f">Field of Study</label><input id="e1f" placeholder="Search" data-search="Electronics Engineering Technology|Electronics|Biology">
+  <h3>Skills</h3>
+  <label for="skills">Type to Add Skills</label><input id="skills" placeholder="Search" data-search="Python|Oscilloscopes|Soldering">
+  <div id="picked"></div>
+  <h3>Languages</h3><div id="langs"></div><button type="button" id="addLang">Add</button>
+  <h3>Websites</h3><div id="sites"></div><button type="button" id="addSite">Add</button>
+  <label for="files">Resume/CV</label><input id="files" type="file" multiple>
+  <div id="attached"></div>
+  <label for="li">LinkedIn</label><input id="li">
+</section>
+<section data-step="3" hidden>
+  <h2>Application Questions</h2>
+  <span id="q1">Are you legally authorized to work in Canada?*</span>
+  <button aria-haspopup="listbox" aria-labelledby="q1" aria-required="true" data-options="Yes|No">Select One</button>
+  <label for="q2">What are your salary expectations?*</label><textarea id="q2" aria-required="true"></textarea>
+</section>
+<section data-step="4" hidden>
+  <h2>Voluntary Disclosures</h2>
+  <span id="g1">Gender</span><button aria-haspopup="listbox" aria-labelledby="g1" data-options="Male|Female|Prefer not to say">Select One</button>
+  <label><input type="checkbox" required>I consent to the terms</label>
+</section>
+<section data-step="5" hidden>
+  <h2>Review</h2>
+  <button id="submit" onclick="document.body.innerHTML='<h1>Application submitted</h1>'">Submit</button>
+</section>
+<ul role="listbox" id="list" hidden></ul>
+<button data-automation-id="bottom-navigation-next-button" id="next">Save and Continue</button>
+<script>
+  let step = 1, openFor = null;
+  const show = n => document.querySelectorAll('section').forEach(s => s.hidden = +s.dataset.step !== n);
+  document.getElementById('next').onclick = () => {
+    // like Workday: required fields on the page must be filled to move on
+    const sec = document.querySelector(`section[data-step="${step}"]`);
+    const blank = [...sec.querySelectorAll('[aria-required=true], [required]')].some(e =>
+      e.tagName === 'BUTTON' ? e.innerText === 'Select One' : e.type === 'radio' ?
+        !sec.querySelector(`input[name="${e.name}"]:checked`) : e.type === 'checkbox' ? !e.checked : !e.value);
+    if (blank) return;
+    step++; show(step); if (step === 5) document.getElementById('next').hidden = true;
+  };
+  document.querySelectorAll('button[aria-haspopup=listbox]').forEach(b => b.onclick = () => {
+    const list = document.getElementById('list'); openFor = b;
+    list.innerHTML = b.dataset.options.split('|').map(o => `<li role="option">${o}</li>`).join('');
+    list.hidden = false;
+    list.querySelectorAll('li').forEach(li => li.onclick = () => { openFor.innerText = li.innerText; list.hidden = true; });
+  });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') document.getElementById('list').hidden = true; });
+  // Search boxes (skills, languages): typing shows matching options; picking adds a pill and clears the box.
+  const wireSearch = input => input.addEventListener('input', () => {
+    const list = document.getElementById('list');
+    const opts = input.dataset.search.split('|').filter(o => input.value && o.toLowerCase().startsWith(input.value.toLowerCase()));
+    list.innerHTML = opts.map(o => `<li role="option">${o}</li>`).join(''); list.hidden = !opts.length;
+    list.querySelectorAll('li').forEach(li => li.onclick = () => {
+      const pill = document.createElement('span'); pill.className = 'pill'; pill.textContent = li.innerText;
+      input.after(pill); input.value = ''; list.hidden = true; });
+  });
+  wireSearch(document.getElementById('skills')); wireSearch(document.getElementById('e1f'));
+  let n = 0;
+  document.getElementById('addLang').onclick = () => {
+    n++;
+    const d = document.createElement('div');
+    d.innerHTML = `<label for="lang${n}">Language*</label><input id="lang${n}" data-search="English|Russian|French">
+      <label><input type="checkbox" id="flu${n}">I am fluent in this language</label>
+      <span id="ov${n}">Overall*</span><button aria-haspopup="listbox" aria-labelledby="ov${n}" data-options="Beginner|Intermediate|Advanced|Native">Select One</button>`;
+    document.getElementById('langs').appendChild(d);
+    wireSearch(d.querySelector('input[data-search]'));
+    d.querySelector('button').onclick = () => {
+      const list = document.getElementById('list'), b = d.querySelector('button'); openFor = b;
+      list.innerHTML = b.dataset.options.split('|').map(o => `<li role="option">${o}</li>`).join(''); list.hidden = false;
+      list.querySelectorAll('li').forEach(li => li.onclick = () => { b.innerText = li.innerText; list.hidden = true; });
+    };
+  };
+  document.getElementById('addSite').onclick = () => {
+    document.getElementById('sites').innerHTML = '<label for="url1">URL*</label><input id="url1">';
+  };
+  document.getElementById('files').onchange = e =>
+    document.getElementById('attached').innerText = [...e.target.files].map(f => f.name).join(', ');
+</script>
+</body></html>

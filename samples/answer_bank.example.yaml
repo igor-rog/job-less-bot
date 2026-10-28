@@ -1,0 +1,20 @@
+# Example answer bank (fake person). Copy to data/answer_bank.yaml, fill in your own answers, then run:
+#   python -m pipeline.answers import data/answer_bank.yaml
+# Leave an answer empty and the form filler leaves that question blank and flags it for you.
+
+- question: Are you legally authorized to work in Canada?
+  answer: "Yes"
+- question: Will you now or in the future require sponsorship for employment visa status?
+  answer: "No"
+- question: What are your salary expectations?
+  answer: "$55,000 to $65,000 per year, depending on the role and benefits."
+- question: When can you start?
+  answer: "I can start two weeks after receiving an offer."
+- question: Do you have a valid driver's licence?
+  answer: "Yes, a full Ontario G licence."
+- question: Are you willing to relocate?
+  answer: "No, I'm looking for roles in the Greater Toronto Area or remote."
+- question: How did you hear about this position?
+  answer: "Online job posting."
+- question: Why do you want to work here?
+  per_job: true     # always drafted fresh for each job

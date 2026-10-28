@@ -1,0 +1,42 @@
+company,careers_url,category,title_words,notes
+Toronto Hydro,https://jobs.torontohydro.com/search/?q=,Utility,,SuccessFactors site; read with browser fallback
+Hydro One,https://jobs.hydroone.com/go/Technical-Jobs/827000/,Utility,,Technical jobs page; powerline and apprentice roles
+Ontario Power Generation,https://jobs.opg.com/go/View-All-Jobs/2398117/,Utility,,
+Alectra Utilities,https://jobs.dayforcehcm.com/en-US/alectra/CANDIDATEPORTAL,Utility,,Greater Toronto Top Employer 2026
+Elexicon Energy,https://elexiconenergy.com/careers,Utility,,Durham region
+Kinectrics,https://www.kinectrics.com/careers,Testing lab,,Electrical and power equipment testing
+CSA Group,https://csagroup.wd3.myworkdayjobs.com/csagroup,Testing lab,,Workday; product testing and certification incl. EMC; Top Employer 2026
+UL Solutions,https://www.ul.com/careers,Testing lab,,Safety and EMC testing
+Intertek,https://www.intertek.com/careers/,Testing lab,,Product testing incl. EMC
+TTC,https://www.ttc.ca/jobs/current-opportunities,Transit,,Electricians and electrical technicians
+Metrolinx,https://www.metrolinx.com/en/about-us/careers,Transit,,Rail signals and electrical
+City of Toronto,https://jobs.toronto.ca/jobsatcity/,Public sector,,Electricians and electrical technicians
+Toronto Community Housing,https://www.torontohousing.ca/careers,Public sector,,Building maintenance electricians; Top Employer 2026
+ABB,https://abb.wd3.myworkdayjobs.com/External_Career_Page,Electrical equipment,,Workday; Mississauga and Milton sites
+Hitachi Energy,https://hitachi.wd1.myworkdayjobs.com/hitachi,Electrical equipment,,Workday; Toronto and Stoney Creek
+GE Vernova,https://gevernova.wd5.myworkdayjobs.com/Vernova_ExternalSite,Electrical equipment,,Workday; grid and power
+Schneider Electric,https://careers.se.com/jobs?location=Canada,Electrical equipment,,
+Siemens Canada,https://jobs.siemens.com/en_US/externaljobs,Electrical equipment,,Global site; location filtered later
+Celestica,https://www.celestica.com/careers/working-at-celestica,Electronics manufacturing,,Toronto HQ
+Thales Canada,https://thales.wd3.myworkdayjobs.com/Careers,Rail signals and RF,,Workday; Toronto rail signalling
+MDA Space,https://mda.space/careers,RF and space,,Brampton; RF and electronics technicians
+L3Harris,https://careers.l3harris.com/en,RF and defence,,
+Bombardier,https://careers.bombardier.com/,Aerospace,,Downsview; aircraft electrical technicians
+Rocket Lab,https://job-boards.greenhouse.io/rocketlab,RF and space,,Greenhouse; Toronto office (formerly Sinclair Technologies): RF and electronics
+Baylin Technologies,https://baylintech.com/careers,RF,,Toronto antenna and RF maker
+Rogers,https://jobs.rogers.com/search/?q=technician,Telecom RF,,Field and RF technician roles only
+Bell,https://jobs.bell.ca/ca/en/search-results?keywords=technician,Telecom RF,,Field and RF technician roles only
+Black & McDonald,https://blackandmcdonald.com/careers/,Electrical contractor,,Apprentices and electrical technicians
+Plan Group,https://plangroup.com/careers,Electrical contractor,,Apprentices
+JLL,https://jll.wd1.myworkdayjobs.com/jllcareers,Facilities,,Workday; building and data centre technicians incl. bank sites
+BGIS,https://www.bgis.com/careers,Facilities,,Runs facilities for several big banks; building technicians
+RBC,https://rbc.wd3.myworkdayjobs.com/RBCGLOBAL1,Bank,banking associate;contact centre;contact center;client service;operations associate;fraud;client engagement,Entry-level roles; IT roles excluded
+TD Bank,https://td.wd3.myworkdayjobs.com/TD_Bank_Careers,Bank,banking associate;contact centre;contact center;client service;operations associate;fraud;client engagement,Entry-level roles; IT roles excluded
+BMO,https://bmo.wd3.myworkdayjobs.com/External,Bank,banking associate;contact centre;contact center;client service;operations associate;fraud;client engagement,Entry-level roles; IT roles excluded
+CIBC,https://cibc.wd3.myworkdayjobs.com/search,Bank,banking associate;contact centre;contact center;client service;operations associate;fraud;client engagement,Entry-level roles; IT roles excluded
+Scotiabank,https://jobs.scotiabank.com/,Bank,banking associate;contact centre;contact center;client service;operations associate;fraud;client engagement,Browser fallback
+Johnson Controls,https://jci.wd5.myworkdayjobs.com/JCI,Security systems,,Workday; security and fire systems technicians
+Collins Aerospace (RTX),https://globalhr.wd5.myworkdayjobs.com/REC_RTX_Ext_Gateway,Aerospace and defence,,Workday; Oakville and Mississauga plants
+Paladin Technologies,https://www.paladintechnologies.com/careers,Security systems,,Access control and CCTV integrator
+Convergint,https://www.convergint.com/careers/,Security systems,,Access control and security integrator
+Magellan Aerospace,https://www.magellan.aero/careers/,Aerospace and defence,,Mississauga

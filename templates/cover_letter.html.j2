@@ -1,0 +1,24 @@
+{% import "_shared.html.j2" as shared %}
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>{{ contact.name }} - Cover Letter</title>
+<style>
+  {{ shared.base_css() }}
+  .rule { border-bottom: 1.5px solid #111; margin: 10px 0 24px; }
+  .letter p { margin: 0 0 12px; font-size: 11pt; line-height: 1.45; }
+</style>
+</head>
+<body>
+  {{ shared.header(contact) }}
+  <div class="rule"></div>
+  <div class="letter">
+    <p>{{ date }}</p>
+    <p>{{ company }}</p>
+    <p>{{ letter.greeting }}</p>
+    {% for paragraph in letter.paragraphs %}<p>{{ paragraph }}</p>{% endfor %}
+    <p>{{ letter.sign_off }}<br>{{ contact.name }}</p>
+  </div>
+</body>
+</html>
